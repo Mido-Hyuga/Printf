@@ -1,48 +1,49 @@
 #include "main.h"
-
 /**
- * _printf - Custom printf function
- * @format: Format string with conversion specifiers
- * Return: Number of characters printed
- */
+* _printf - Printf function
+* @format: Pointer char
+* Return: Return len
+*/
 int _printf(const char *format, ...)
 {
+	unsigned int i = 0, len = 0, sizebf = 0;
 	va_list args;
-	int printed_chars = 0;
 	int (*handler)(va_list, char *, unsigned int);
-	char buffer[1024];
-	unsigned int buffer_size = 0;
-
-	if (!format)
-		return (-1);
+	char *buffer;
 
 	va_start(args, format);
-
-	while (*format)
+	 buffer = malloc(sizeof(char) * 1024);
+	if (!format || !buffer || (format[i] == '%' && !format[i + 1]))
+		return (-1);
+	if (!format[i])
+		return (0);
+	for (i = 0; format && format[i]; i++)
 	{
-		if (*format != '%')
+		if (format[i] == '%')
 		{
-			if (buffer_size == 1024)
-				_putchar(buffer, buffer_size), buffer_size = 0;
-			buffer[buffer_size++] = *format, printed_chars++;
-		}
-		else if (*(format + 1) != '\0')
-		{
-			format++, handler = get_handler(*format);
-			if (handler)
-				buffer_size = handler(args, buffer, buffer_size);
-			else
+			if (format[i + 1] == '\0')
 			{
-				if (buffer_size == 1024)
-					_putchar(buffer, buffer_size), buffer_size = 0;
-				buffer[buffer_size++] = '%', buffer[buffer_size++] = *format;
-				printed_chars += 2;
+				_putchar(buffer, sizebf), free(buffer), va_end(args);
+				return (-1);
 			}
+			else
+			{	handler = get_handler(format, i + 1);
+				if (handler == NULL)
+				{
+					if (format[i + 1] == ' ' && !format[i + 2])
+						return (-1);
+					buffer_handler(buffer, format[i], sizebf), len++, i--;
+				}
+				else
+					len += handler(args, buffer, sizebf), i += flags(format, i + 1);
+			} i++;
 		}
-		format++;
+		else
+			buffer_handler(buffer, format[i], sizebf), len++;
+		for (sizebf = len; sizebf > 1024; sizebf -= 1024)
+			;
 	}
-	if (buffer_size > 0)
-		_putchar(buffer, buffer_size);
-	va_end(args);
-	return (printed_chars);
+	_putchar(buffer, sizebf);
+	 free(buffer), va_end(args);
+	return (len);
 }

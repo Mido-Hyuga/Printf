@@ -2,12 +2,13 @@
 
 /**
 *_putchar - Function printing character
-*@buffersize: String
+*@buffersize: Size of buffer
 *@buffer: String
-*Return: Integer
+*Return: Int
 */
 
 int _putchar(char *buffer, int buffersize)
 {
 	return (write(1, buffer, buffersize));
 }
+

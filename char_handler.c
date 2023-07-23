@@ -1,21 +1,18 @@
 #include "main.h"
 
 /**
-* print_char_handler - Handle the %c format specifier
-* @args: Argument list
-* @buffer: Buffer to store the formatted string
-* @buffer_size: Current buffer size
-* Return: Number of characters printed
+* char_handler - handle charachters
+* @arg: list args
+* @buffer: String pointer
+* @buffer_size: unsigned integer
+* Return: return 1
 */
-int print_char_handler(va_list args, char *buffer, unsigned int buffer_size)
+int char_handler(va_list arg, char *buffer, unsigned int buffer_size)
 {
-	char c = va_arg(args, int);
+	char value;
 
-	if (buffer_size == 1024)
-	{
-		_putchar(buffer, buffer_size);
-		buffer_size = 0;
-	}
-	buffer[buffer_size++] = c;
-	return (buffer_size);
+	value = va_arg(arg, int);
+	buffer_handler(buffer, value, buffer_size);
+
+	return (1);
 }

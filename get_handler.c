@@ -1,21 +1,41 @@
 #include "main.h"
 
 /**
- * get_handler - Get the appropriate handler for the conversion specifier
- * @specifier: Format specifier character
- * Return: Function pointer to the appropriate handler
- */
-int (*get_handler(char specifier))(va_list, char *, unsigned int)
+* get_handler - Get the appropriate handler for the conversion specifier
+* @sp: Format specifier character
+* @idx: Integer index
+* Return: Function pointer to the appropriate handler
+*/
+int (*get_handler(const char *sp, int idx))(va_list, char *, unsigned int)
 {
-	switch (specifier)
+	opt con[] = {
+		{"c", char_handler},
+		{"s", string_handler},
+/*{"d", integer_handler}, {"i", integer_handler},*/
+		{"%", per_handler},
+		{NULL, NULL}
+	};
+	int i = 0, j = 0, f_idx;
+
+	f_idx = idx;
+	while (con[i].flag && sp)
 	{
-		case 'c':
-			return (&print_char_handler);
-		case 's':
-			return (&print_string_handler);
-		case '%':
-			return (&print_percent_handler);
-		default:
-			return (NULL); /* Invalid specifier */
+		if (sp[idx] == con[i].flag[j])
+		{
+			if (con[i].flag[j + 1] != 0)
+			{
+				idx++;
+				j++;
+			}
+			else
+				break;
+		}
+		else
+		{
+			j = 0;
+			i++;
+			idx = f_idx;
+		}
 	}
+	return (con[i].p);
 }

@@ -5,21 +5,35 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+
+/**
+* struct option - Stucture Option
+* @flag: String pointer.
+* @p: Pointer to the function.
+* Description: Define a type struct opt with flag and p.
+*/
+
+typedef struct option
+{
+	char *flag;
+	int (*p)(va_list, char *, unsigned int);
+
+} opt;
 
 
 /*functions Prototypes */
+int (*get_handler(const char *sp, int idx))(va_list, char *, unsigned int);
 int _printf(const char *format, ...);
+int char_handler(va_list arg, char *buffer, unsigned int buffer_size);
+int integer_handler(va_list arg, char *buffer, unsigned int buffer_size);
+int string_handler(va_list arg, char *buffer, unsigned int buffer_size);
+int per_handler(va_list ar __attribute__((unused)), char *a, unsigned int b);
 
-/* Handlers */
-int print_char_handler(va_list args, char *buffer, unsigned int buffer_size);
-int print_string_handler(va_list args, char *buffer, unsigned int buffer_size);
-int print_percent_handler(va_list args, char *buffer, unsigned int buffer_size);
-int print_integer_handler(va_list args, char *buffer, unsigned int buffer_size);
-int print_bases_handler(va_list args, char *buffer, unsigned int buffer_size);
 
-/*help functions*/
+
+unsigned int buffer_handler(char *buffer, char ch, unsigned int buffer_size);
 int _putchar(char *buffer, int buffersize);
-int (*get_handler(char specifier))(va_list, char *, unsigned int);
+int flags(const char *s, int idx);
+int char_len(char *c);
 
 #endif

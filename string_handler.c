@@ -1,28 +1,31 @@
 #include "main.h"
-
 /**
-* print_string_handler - Handle the %s format specifier
-* @args: Argument list
-* @buffer: Buffer to store the formatted string
-* @buffer_size: Current buffer size
-* Return: Number of characters printed
+* string_handler - function for string
+* @arg: type for va_list
+* @buffer: String
+* @buffer_size: Integer positive
+* Return: Integer
 */
-int print_string_handler(va_list args, char *buffer, unsigned int buffer_size)
+int string_handler(va_list arg, char *buffer, unsigned int buffer_size)
 {
-	char *str = va_arg(args, char *);
-	unsigned int i;
+	char *vl;
+	unsigned int i = 0;
+	char null_vl[] = "(null)";
 
-	if (!str)
-		str = "(null)";
-
-	for (i = 0; str[i] && buffer_size < 1024; i++, buffer_size++)
+	vl = va_arg(arg, char *);
+	if (vl == 0)
 	{
-		if (buffer_size == 1024)
+		while (null_vl[i])
 		{
-			_putchar(buffer, buffer_size);
-			buffer_size = 0;
+			buffer_size = buffer_handler(buffer, null_vl[i], buffer_size);
+			i++;
 		}
-		buffer[buffer_size] = str[i];
+		return (6);
 	}
-	return (buffer_size);
+	while (*(vl + i))
+	{
+		buffer_size = buffer_handler(buffer, vl[i], buffer_size);
+		i++;
+	}
+	return (i);
 }
