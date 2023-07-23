@@ -11,7 +11,8 @@ int flags(const char *s, int idx)
 	opt pr[] = {
 		{"c", char_handler},
 		{"s", string_handler},
-/*{"d", integer_handler},{"i", integer_handler},*/
+                {"d", integer_handler},
+                {"i", integer_handler},
 		{"%", per_handler},
 		{NULL, NULL}
 	};
