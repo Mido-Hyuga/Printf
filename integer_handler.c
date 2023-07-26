@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
- * integer_handler - Function integer handler
- * @arg_list: Argument list of type va_list
- * @buffer: String
- * @buf_size: unsigned Integer
- * Return: Integer
- */
+* integer_handler - Function integer handler
+* @arg_list: Argument list of type va_list
+* @buffer: String
+* @buf_size: unsigned Integer
+* Return: Integer
+*/
 int integer_handler(va_list arg_list, char *buffer, unsigned int buf_size)
 {
 	int j, i;

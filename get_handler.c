@@ -11,7 +11,8 @@ int (*get_handler(const char *sp, int idx))(va_list, char *, unsigned int)
 	opt con[] = {
 		{"c", char_handler},
 		{"s", string_handler},
-	       	{"i", integer_handler},
+		{"d", integer_handler},
+		{"i", integer_handler},
 		{"%", per_handler},
 		{NULL, NULL}
 	};
